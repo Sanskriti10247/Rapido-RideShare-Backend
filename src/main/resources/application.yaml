@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Rapido
+
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/rideshare
+      database: rideshare
+
+server:
+  port: 9000
+
+jwt:
+  secret: rideshareSecretKey123
+  expiration: 86400000
