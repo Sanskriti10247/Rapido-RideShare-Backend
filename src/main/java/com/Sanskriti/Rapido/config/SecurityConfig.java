@@ -27,16 +27,29 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        .requestMatchers(
+                                "/api/v1/rides/search",
+                                "/api/v1/rides/filter-distance",
+                                "/api/v1/rides/filter-date-range",
+                                "/api/v1/rides/sort",
+                                "/api/v1/rides/filter-status",
+                                "/api/v1/rides/advanced-search",
+                                "/api/v1/rides/date/**"
+                        ).permitAll()
+
                         .requestMatchers("/api/v1/driver/**").hasRole("DRIVER")
                         .requestMatchers("/api/v1/user/**").hasRole("USER")
-                        .requestMatchers("/api/v1/**").authenticated()
-                        .anyRequest().permitAll()
+
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
